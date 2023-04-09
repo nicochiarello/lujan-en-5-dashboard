@@ -1,3 +1,62 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.abril-font {
+    font-family: "Abril Fatface", cursive;
+  }
+  
+  .main-color {
+    color: #ff3b1d;
+  }
+  
+  .line {
+    border-color: #cccccc;
+  }
+  
+  .border-main {
+    border-bottom: 1px solid #ff3b1d;
+  }
+  
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  .gradient-bg {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .ql-editor {
+    min-height: 420px;
+    max-height: 420px;
+  }
+  
+  .body-p p:first-child::first-letter {
+    color: black;
+    padding: 0.8rem 1rem;
+    margin: 0 0.3rem 0 0;
+    border: 2px solid #ff3b1d;
+    border-radius: 8px;
+      font-family: 'Times New Roman', Times, serif;
+    font-size: 3rem;
+    float: left;
+    line-height: 1;
+  }
+  
+  .ql-video{
+    width: 100%;
+    height: 55.25%;
+  }
+
+  .main-boxes-shadow {
+    box-shadow: -1px 14px 52px -1px rgba(181, 181, 181, 0.55);
+    -webkit-box-shadow: -1px 14px 52px -1px rgba(181, 181, 181, 0.55);
+    -moz-box-shadow: -1px 14px 52px -1px rgba(181, 181, 181, 0.55);
+  }

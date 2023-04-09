@@ -2,7 +2,6 @@ import { useState, useRef, useCallback, use, useEffect } from "react";
 import Dashboard from "../components/Layouts/Dashboard";
 import Modal from "../components/modal/Index";
 import parse from "html-react-parser";
-import { ClipLoader } from "react-spinners";
 import { Toaster, toast } from "react-hot-toast";
 import { deleteBlog } from "../utils/api/blogs/blogs.routes";
 import axios from "axios";
@@ -14,9 +13,7 @@ const Panel = () => {
   const [selected, setSelected] = useState(null);
   const [type, setType] = useState(0);
   const [page, setPage] = useState(1);
-  const [nbPages, setNbPages] = useState(3);
-
-  console.log({ blogs });
+  const [nbPages, setNbPages] = useState(1);
 
   useEffect(() => {
     let source = axios.CancelToken.source();
@@ -30,6 +27,7 @@ const Panel = () => {
         setBlogs((prevBlogs) => {
           return [...new Set([...prevBlogs, ...res.data.blogs])];
         });
+        setNbPages(res.data.totalPages);
       })
       .catch((err) => {});
 

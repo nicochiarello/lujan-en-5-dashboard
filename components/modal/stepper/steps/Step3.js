@@ -1,7 +1,7 @@
 import { data } from "autoprefixer";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, use } from "react";
 
-const Step3 = ({data, onChange}) => {
+const Step3 = ({ data, onChange }) => {
   const [image, setImage] = useState();
   const [preview, setPreview] = useState();
   const fileInputRef = useRef();
@@ -17,7 +17,13 @@ const Step3 = ({data, onChange}) => {
       setPreview(null);
     }
   }, [image]);
-  
+
+  useEffect(() => {
+    if (data.img) {
+      setPreview(`${process.env.NEXT_PUBLIC_IMG_URI}/` + data.img);
+    }
+  }, [data]);
+
   return (
     <div className="w-full h-full px-24 flex items-center justify-center">
       <div className="flex justify-center items-center w-full h-full">
@@ -37,19 +43,18 @@ const Step3 = ({data, onChange}) => {
                     const file = event.target.files[0];
                     if (file) {
                       setImage(file);
-                      onChange({...data, img: file})
+                      onChange({ ...data, img: file });
                     } else {
                       setImage(null);
                     }
                   }}
                 />
-              <img
-                className="w-full max-h-full object-contain"
-                src={preview}
-                alt=""
-              />
+                <img
+                  className="w-full max-h-full object-contain"
+                  src={preview}
+                  alt=""
+                />
               </label>
-   
             </div>
           ) : (
             <label
@@ -86,7 +91,7 @@ const Step3 = ({data, onChange}) => {
                   const file = event.target.files[0];
                   if (file) {
                     setImage(file);
-                    onChange({...data, img: file})
+                    onChange({ ...data, img: file });
                   } else {
                     setImage(null);
                   }

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Controller from "./stepper/Controller";
 import Stepper from "./stepper/Stepper";
-import { sendBlog } from "../../utils/api/blogs/blogs.routes";
+import { sendBlog, updateBlog } from "../../utils/api/blogs/blogs.routes";
 import { toast } from "react-hot-toast";
 
 const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
@@ -18,9 +18,11 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
 
   useEffect(() => {
     if (type === 1) {
-      setData({ ...initialData });
+      setData({ ...initialData, category: initialData.category._id });
     }
   }, [type]);
+
+  console.log({initialData})
 
   const formData = new FormData();
 
@@ -56,8 +58,7 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
     }
 
     if (option === 2) {
-      if(type === 0){
-
+      if (type === 0) {
         return sendBlog(
           setLoader,
           formData,
@@ -66,8 +67,15 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
           toast.success("Creado exitosamente!")
         );
       }
-      if(type === 1){
-        return 
+      if (type === 1) {
+        return updateBlog(
+          data._id,
+          setLoader,
+          formData,
+          setBlogs,
+          () => onClose(false),
+          toast.success("Editado exitosamente!")
+        );
       }
     }
   };

@@ -24,9 +24,21 @@ export const sendBlog = (setLoader, formData, setBlogs, onClose, cb) => {
     .catch((err) => console.log(err));
 };
 
-export const updateBlog = (setLoader) =>{
-    setLoader(true)
-}
+export const updateBlog = (id, setLoader, formData, setBlogs, onClose, cb) => {
+  setLoader(true);
+  axios
+    .put(
+      `${process.env.NEXT_PUBLIC_API_URI}/api/blogs/update/id/${id}`,
+      formData,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    )
+    .then(() => {
+      return getAllBlogs(setLoader, setBlogs, onClose, cb);
+    })
+    .catch((err) => console.log(err));
+};
 
 export const deleteBlog = (setLoader, id, setBlogs, cb) => {
   setLoader(true);

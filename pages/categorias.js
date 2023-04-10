@@ -40,22 +40,21 @@ const Categorias = () => {
       {popupOpened && (
         <CreatorHandler
           onClose={() => {
-            setPopupOpened(false)
-        }}
+            setPopupOpened(false);
+          }}
           setCategories={(category) => setCategories([...categories, category])}
           setLoader={setLoader}
         />
       )}
 
       <Toaster />
-      <div className="w-full h-full flex flex-col py-5 px-5 max-w-[calc(1600px)]">
-        <div className=" flex pr-10 h-[calc(8rem)] items-center justify-around ">
-          <div className="flex items-center justify-start w-full">
+      <div className="w-full h-full flex flex-col py-5 px-1 md:px-5 max-w-[calc(1600px)]">
+        <div className="flex h-[calc(8rem)] items-center md:justify-between ">
+          <div className="hidden md:flex items-center justify-start w-full">
             <div className="bg-blue-500 w-24 h-24 rounded-full text-white flex items-center justify-center">
               <i className="bx bx-user text-[calc(60px)]"></i>
             </div>
-
-            <div className="px-3">
+            <div className="md:px-3">
               <p className="font-bold text-xl">Hola!</p>
               <p className=" text-gray-600">Administra tus datos aquí</p>
             </div>
@@ -70,7 +69,7 @@ const Categorias = () => {
             <p>Agregar Categoría</p>
           </div>
         </div>
-        <div className="w-full h-full bg-white main-boxes-shadow mt-5 rounded-2xl flex flex-col gap-4 px-6 py-4 overflow-y-scroll scrollbar">
+        <div className="w-full h-full bg-white main-boxes-shadow mt-5 rounded-2xl flex flex-col gap-4 px-1 md:px-6 py-4 overflow-y-scroll scrollbar">
           {loader ? (
             <div className="w-full h-full flex items-center justify-center">
               {" "}

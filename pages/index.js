@@ -69,13 +69,12 @@ const Panel = () => {
   return (
     <Dashboard>
       <Toaster />
-      <div className="w-full h-full flex flex-col py-5 px-5 max-w-[calc(1600px)]">
-        <div className=" flex pr-10 h-[calc(8rem)] items-center justify-around ">
-          <div className="flex items-center justify-start w-full">
+      <div className="w-full h-full flex flex-col py-5 px-2 md:px-5 max-w-[calc(1600px)]">
+        <div className=" flex h-[calc(8rem)] items-center md:justify-around ">
+          <div className="hidden md:flex items-center justify-start w-full">
             <div className="bg-blue-500 w-24 h-24 rounded-full text-white flex items-center justify-center">
               <i className="bx bx-user text-[calc(60px)]"></i>
             </div>
-
             <div className="px-3">
               <p className="font-bold text-xl">Hola!</p>
               <p className=" text-gray-600">Administra tus datos aquí</p>
@@ -83,7 +82,7 @@ const Panel = () => {
           </div>
           <div
             onClick={() => handletoggle()}
-            className=" bg-blue-500 text-white rounded-[calc(10px)] py-4 px-5 font-semibold flex items-center gap-4 cursor-pointer flex-shrink-0"
+            className="bg-blue-500 text-white rounded-[calc(10px)] py-4 px-5 font-semibold flex items-center gap-4 cursor-pointer flex-shrink-0"
           >
             <p>
               <i className="bx bx-plus text-2xl font-extralight"></i>
@@ -91,7 +90,7 @@ const Panel = () => {
             <p>Agregar Publicación</p>
           </div>
         </div>
-        <div className="w-full h-full bg-white shadow-2xl mt-5 rounded-2xl grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 px-6 py-4 overflow-y-scroll scrollbar">
+        <div className="w-full h-full bg-white shadow-2xl mt-5 rounded-2xl grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 md:px-6 py-4 overflow-y-scroll scrollbar">
           {blogs.map((i, key) => {
             if (blogs.length === key + 1) {
               return (
@@ -180,10 +179,10 @@ const Panel = () => {
         </div>
         {modalOpened && (
           <Modal
-            onClose={()=>{
-              setType(0)
-              setSelected(null)
-              setModalOpened(false)
+            onClose={() => {
+              setType(0);
+              setSelected(null);
+              setModalOpened(false);
             }}
             blogs={blogs}
             setBlogs={setBlogs}

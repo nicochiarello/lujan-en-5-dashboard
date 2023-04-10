@@ -46,7 +46,7 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
 
     if (option === "minus") {
       if (step <= 1) {
-        return;
+        onClose();
       } else {
         setStep((prevStep) => prevStep - 1);
       }
@@ -81,13 +81,13 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
     <div
       ref={modalRef}
       onClick={listenerFn}
-      className=" gradient-bg w-screen h-screen flex justify-center items-center absolute top-0 left-0"
+      className=" gradient-bg w-screen h-screen flex justify-center items-center fixed top-0 left-0"
     >
-      <div className="w-[calc(1000px)] h-[calc(700px)] bg-white rounded-xl overflow-hidden flex flex-col justify-between">
+      <div className="w-full h-full max-h-[700px] mx-2 md:w-[calc(1000px)] md:h-[calc(700px)] bg-white rounded-xl overflow-hidden flex flex-col justify-between">
         <div className="w-full h-[calc(95px)] ">
           <Stepper step={step} />
         </div>
-        <div className="w-full h-[calc(555px)] ">
+        <div className="w-full flex-1">
           <Controller
             step={step}
             data={data}
@@ -95,22 +95,18 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
             categories={categories}
           />
         </div>
-        <div className="w-full h-[calc(80px)] flex justify-center items-center gap-24">
+        <div className="w-full max-w-[20rem] m-auto h-[calc(80px)] flex justify-center items-center gap-24">
           <div
             onClick={() => handleStep("minus")}
             className=" w-[calc(12rem)] h-[calc(50px)] bg-blue-500 flex items-center justify-center rounded-xl text-white font-semibold cursor-pointer"
           >
-            Atras
+            {step === 1 ? "Cerrar" : "Atras"}
           </div>
           <div
             onClick={() => {
               step !== 3 ? handleStep("plus") : handleStep(2);
             }}
-            className={
-              step === 3
-                ? " w-[calc(12rem)] h-[calc(50px)] bg-green-400 transition-all flex items-center justify-center rounded-xl text-white font-semibold cursor-pointer"
-                : " w-[calc(12rem)] h-[calc(50px)] bg-blue-500 flex transition-all items-center justify-center rounded-xl text-white font-semibold cursor-pointer"
-            }
+            className={"w-[calc(12rem)] h-[calc(50px)] bg-blue-500 flex transition-all items-center justify-center rounded-xl text-white font-semibold cursor-pointer"}
           >
             {step === 3 ? "Publicar" : "Siguiente"}
           </div>

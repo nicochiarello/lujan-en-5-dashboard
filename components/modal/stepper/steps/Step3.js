@@ -25,11 +25,11 @@ const Step3 = ({ data, onChange }) => {
   }, [data]);
 
   return (
-    <div className="w-full h-full px-24 flex items-center justify-center">
+    <div className="w-full h-full max-w-[50rem] m-auto flex items-center justify-center">
       <div className="flex justify-center items-center w-full h-full">
         <>
           {preview ? (
-            <div className="w-full h-[calc(450px)] bg-gray-600 relative">
+            <div className="w-full flex-1 bg-gray-600 relative">
               <label
                 for="dropzone-file"
                 className="flex flex-col justify-center items-center w-full h-[calc(450px)]  rounded-lg border-2  border-dashed cursor-pointer dark:hover:bg-bray-800 bg-gray-700 border-gray-600 hover:border-gray-500 hover:bg-gray-600"

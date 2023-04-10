@@ -26,10 +26,9 @@ const Stepper = ({ step }) => {
       activeClass:
         "h-12 w-12 rounded-full flex items-center justify-center border bg-blue-600 border-gray-300 transition-all duration-300",
     },
-
   ];
   return (
-    <div className=" flex w-full h-full items-center px-44">
+    <div className=" flex w-full px-4 h-full max-w-[35rem] m-auto items-center ">
       {stepperData.map((i, key) => {
         return (
           <>
@@ -40,21 +39,21 @@ const Stepper = ({ step }) => {
                 </div>
               ) : (
                 <div
-                className={
-                  step > i.step
-                    ? " h-12 w-12 rounded-full flex items-center justify-center border bg-blue-600 border-gray-300 transition-all duration-300"
-                    : " h-12 w-12 rounded-full flex items-center justify-center border-2 border-gray-200 transition-all duration-300"
-                }
-              >
-                {step > i.step ? (
-                  <i className="bx bx-check text-2xl text-white"></i>
-                ) : (
-                  i.step
-                )}
-              </div>
+                  className={
+                    step > i.step
+                      ? " h-12 w-12 rounded-full flex items-center justify-center border bg-blue-600 border-gray-300 transition-all duration-300"
+                      : " h-12 w-12 rounded-full flex items-center justify-center border-2 border-gray-200 transition-all duration-300"
+                  }
+                >
+                  {step > i.step ? (
+                    <i className="bx bx-check text-2xl text-white"></i>
+                  ) : (
+                    i.step
+                  )}
+                </div>
               )}
 
-              <div className="absolute top-[calc(3.5rem)] flex w-[calc(10rem)] text-center justify-center">
+              <div className="hidden absolute top-[calc(3.5rem)] sm:flex w-[calc(10rem)] text-center justify-center">
                 {i.name}
               </div>
             </div>

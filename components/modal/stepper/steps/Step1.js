@@ -8,7 +8,7 @@ const Step1 = ({ data, onChange, categories }) => {
   };
 
   return (
-    <div className="w-full h-full px-20 flex flex-col justify-center gap-8">
+    <div className="w-full h-full px-4 m-auto max-w-[50rem] flex flex-col justify-center gap-8">
       <div>
         <label className="block mb-2 text-sm font-medium text-gray-900">
           Título

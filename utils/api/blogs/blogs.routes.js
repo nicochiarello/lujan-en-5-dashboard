@@ -8,7 +8,9 @@ export const getAllBlogs = (setLoader, setBlogs, onClose, cb) => {
       onClose();
     }
     setLoader(false);
-    cb();
+    if (cb) {
+      cb();
+    }
   });
 };
 
@@ -21,7 +23,11 @@ export const sendBlog = (setLoader, formData, setBlogs, onClose, cb) => {
     .then(() => {
       return getAllBlogs(setLoader, setBlogs, onClose, cb);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      onClose();
+      toast.error("Error");
+      setLoader(false);
+    });
 };
 
 export const updateBlog = (id, setLoader, formData, setBlogs, onClose, cb) => {
@@ -37,7 +43,11 @@ export const updateBlog = (id, setLoader, formData, setBlogs, onClose, cb) => {
     .then(() => {
       return getAllBlogs(setLoader, setBlogs, onClose, cb);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      onClose();
+      toast.error("Error");
+      setLoader(false);
+    });
 };
 
 export const deleteBlog = (setLoader, id, setBlogs, cb) => {

@@ -22,11 +22,7 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
     }
   }, [type]);
 
-  console.log({initialData})
-
   const formData = new FormData();
-
-  console.log({ data });
 
   Object.entries(data).forEach((i) => {
     formData.append(i[0], i[1]);
@@ -34,9 +30,8 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
 
   const listenerFn = (e) => {
     if (modalRef.current === e.target) {
-      // Close modal
-      console.log("Seteo a falso");
-      onClose(false);
+
+      onClose();
     }
   };
 
@@ -64,7 +59,7 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
           formData,
           setBlogs,
           () => onClose(false),
-          toast.success("Creado exitosamente!")
+          () => toast.success("Creado exitosamente!")
         );
       }
       if (type === 1) {
@@ -74,7 +69,7 @@ const Index = ({ onClose, setLoader, setBlogs, initialData, type }) => {
           formData,
           setBlogs,
           () => onClose(false),
-          toast.success("Editado exitosamente!")
+          () => toast.success("Editado exitosamente!")
         );
       }
     }

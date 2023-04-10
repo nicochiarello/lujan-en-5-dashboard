@@ -180,7 +180,11 @@ const Panel = () => {
         </div>
         {modalOpened && (
           <Modal
-            onClose={setModalOpened}
+            onClose={()=>{
+              setType(0)
+              setSelected(null)
+              setModalOpened(false)
+            }}
             blogs={blogs}
             setBlogs={setBlogs}
             setLoader={setLoader}

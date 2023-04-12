@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const Dashboard = ({ children }) => {
   const router = useRouter();
@@ -10,6 +11,9 @@ const Dashboard = ({ children }) => {
 
   return (
     <div className="w-screen min-h-screen md:h-screen md:min-h-[calc(50rem)] flex flex-col md:flex-row font-montserrat relative">
+      <Head>
+        <title>Lujan En 5 Dashboard</title>
+      </Head>
       <div className=" md:flex w-full md:h-full xl:flex h-fit md:w-[calc(200px)] bg-blue-700 flex-col relative overflow-hidden">
         <div className=" w-full flex justify-between items-center h-[4rem] px-2">
           <div className="flex gap-2 items-center">
@@ -26,9 +30,9 @@ const Dashboard = ({ children }) => {
           } w-full md:flex flex-col text-[calc(16px)] text-white font-bold gap-1 py-4 my-10 cursor-pointer`}
         >
           <Link
-            href={"/"}
+            href={"/dashboard/blogs"}
             className={`mx-2 px-2 py-3 rounded-[calc(20px)] flex items-center gap-2 ${
-              path === "/" && "bg-white text-blue-600"
+              path.includes("/blogs") && "bg-white text-blue-600"
             }`}
           >
             <i className="bx bx-spreadsheet text-[calc(22px)]"></i>
@@ -36,7 +40,7 @@ const Dashboard = ({ children }) => {
           </Link>
 
           <Link
-            href={"/categorias"}
+            href={"/dashboard/categorias"}
             className={`mx-2 px-2 py-3 rounded-[calc(20px)] flex items-center gap-2 ${
               path.includes("/categorias") && "bg-white text-blue-600"
             }`}

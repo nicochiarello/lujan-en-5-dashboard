@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Dashboard from "../components/Layouts/Dashboard";
+import Dashboard from "../../components/Layouts/Dashboard";
 import { Toaster, toast } from "react-hot-toast";
 import axios from "axios";
-import CategoryItem from "../components/categories/CategoryItem";
+import CategoryItem from "../../components/categories/CategoryItem";
 import { ClipLoader } from "react-spinners";
-import CreatorHandler from "../components/categories/CreatorHandler";
-import { authCookie } from "../utils/getAuthCookie";
+import CreatorHandler from "../../components/categories/CreatorHandler";
+import { authCookie } from "../../utils/getAuthCookie";
 
 const Categorias = () => {
   const [categories, setCategories] = useState([]);
@@ -82,7 +82,7 @@ const Categorias = () => {
               {" "}
               <ClipLoader size={150} />
             </div>
-          ) : (
+          ) : categories.length ? (
             categories.map((i) => (
               <CategoryItem
                 key={i._id}
@@ -92,6 +92,10 @@ const Categorias = () => {
                 }}
               />
             ))
+          ) : (
+            <div className="w-full h-full flex items-center justify-center">
+              No se han encontrado categorías
+            </div>
           )}
           {}
         </div>

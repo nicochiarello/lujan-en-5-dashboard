@@ -1,199 +1,128 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import Dashboard from "../components/Layouts/Dashboard";
-import Modal from "../components/modal/Index";
-import parse from "html-react-parser";
-import { Toaster, toast } from "react-hot-toast";
-import { deleteBlog } from "../utils/api/blogs/blogs.routes";
+import { useState } from "react";
+import Head from "next/head";
+import { PulseLoader } from "react-spinners";
+import { useRouter } from "next/router";
+import Cookies from "universal-cookie";
 import axios from "axios";
+import { Toaster } from "react-hot-toast";
 
-const Panel = () => {
-  const [modalOpened, setModalOpened] = useState(false);
-  const [blogs, setBlogs] = useState([]);
+export default function Home() {
+  const router = useRouter();
+  const [formValues, setFormValues] = useState({
+    username: "",
+    password: "",
+  });
   const [loader, setLoader] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [type, setType] = useState(0);
-  const [page, setPage] = useState(1);
-  const [nbPages, setNbPages] = useState(1);
+  const [authError, setAuthError] = useState({});
+  const [hiddenPassword, setHiddenPassword] = useState(true);
 
-  useEffect(() => {
-    let source = axios.CancelToken.source();
-
+  const signin = (e) => {
+    e.preventDefault();
+    setLoader(true);
     axios
-      .get(`${process.env.NEXT_PUBLIC_API_URI}/api/blogs?page=${page}`, {
-        cancelToken: source.token,
-      })
+      .post(`${process.env.NEXT_PUBLIC_API_URI}/api/login`, formValues)
       .then((res) => {
         setLoader(false);
-        setBlogs((prevBlogs) => {
-          return [...new Set([...prevBlogs, ...res.data.blogs])];
+        const cookies = new Cookies();
+        cookies.set(process.env.NEXT_PUBLIC_LUJAN_EN_5_KEY, res.data.Token, {
+          path: "/",
         });
-        setNbPages(res.data.totalPages);
+        router.push("/");
       })
-      .catch((err) => {});
-
-    return () => {
-      source.cancel();
-    };
-  }, [page]);
-
-  const handletoggle = () => {
-    setModalOpened(true);
-  };
-
-  const observer = useRef();
-
-  const lastBlogChild = useCallback(
-    (node) => {
-      if (loader) {
-        return;
-      }
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting) {
-          if (page < nbPages) {
-            setPage((prev) => prev + 1);
-          }
-        }
+      .catch((err) => {
+        setLoader(false);
+        setAuthError(err.response.data);
       });
-
-      if (node) {
-        observer.current.observe(node);
-      }
-    },
-    [loader]
-  );
-
+  };
   return (
-    <Dashboard>
-      <Toaster />
-      <div className="w-full h-full flex flex-col py-5 px-2 md:px-5 max-w-[calc(1600px)]">
-        <div className=" flex h-[calc(8rem)] items-center md:justify-around ">
-          <div className="hidden md:flex items-center justify-start w-full">
-            <div className="bg-blue-500 w-24 h-24 rounded-full text-white flex items-center justify-center">
-              <i className="bx bx-user text-[calc(60px)]"></i>
-            </div>
-            <div className="px-3">
-              <p className="font-bold text-xl">Hola!</p>
-              <p className=" text-gray-600">Administra tus datos aquí</p>
+    <>
+      <Head>
+        <title>Luján en 5 Login</title>
+      </Head>
+      <div className="w-screen h-screen flex items-center justify-center px-2 bg-blue-500">
+        <Toaster />
+        <div className="px-2 py-4 w-full sm:max-w-full sm:w-fit sm:min-w-[30rem] h-[30rem] sm:h-fit sm:px-16 sm:py-16 bg-white text-black rounded-xl overflow-hidden flex  flex-col gap-10 justify-around">
+          <div className="w-full h-[6rem] bg-white flex flex-col items-center justify-center">
+            <div className="text-[30px] abril-font">
+              Luján en 5<span className="main-color">’</span>{" "}
             </div>
           </div>
-          <div
-            onClick={() => handletoggle()}
-            className="bg-blue-500 text-white rounded-[calc(10px)] py-4 px-5 font-semibold flex items-center gap-4 cursor-pointer flex-shrink-0"
-          >
-            <p>
-              <i className="bx bx-plus text-2xl font-extralight"></i>
-            </p>
-            <p>Agregar Publicación</p>
-          </div>
-        </div>
-        <div className="w-full h-full bg-white shadow-2xl mt-5 rounded-2xl grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 md:px-6 py-4 overflow-y-scroll scrollbar">
-          {blogs.map((i, key) => {
-            if (blogs.length === key + 1) {
-              return (
-                <div
-                  key={i._id}
-                  ref={lastBlogChild}
-                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2"
-                >
-                  <h3 className="text-xl font-bold my-3">{i.title}</h3>
-                  <p className="text-base my-2 font-medium">{i.copete}</p>
-                  <img
-                    className="w-full max-h-60 object-cover my-5"
-                    src={process.env.NEXT_PUBLIC_IMG_URI + "/" + i.img}
-                    alt={i.name}
-                  />
-                  {parse(i.body)}
-                  <div className="absolute h-full py-4 top-0 right-3 flex flex-col gap-2">
-                    <div
-                      onClick={() => {
-                        setModalOpened(true);
-                        setType(1);
-                        setSelected({ ...i });
-                      }}
-                      className="px-3 py-2 bg-blue-500 rounded-xl cursor-pointer shadow-lg"
-                    >
-                      <i className="bx bxs-edit text-2xl text-white"></i>
-                    </div>
-                    <div
-                      onClick={() =>
-                        deleteBlog(setLoader, i._id, setBlogs, () =>
-                          toast.success("Eliminado exitosamente!")
-                        )
-                      }
-                      className="px-3 py-2 bg-red-600 rounded-xl cursor-pointer shadow-lg"
-                    >
-                      <i className="bx bxs-trash text-2xl text-white"></i>
-                    </div>
-                  </div>
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  key={i._id}
-                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2"
-                >
-                  <h3 className="text-xl font-bold my-3">{i.title}</h3>
-                  <p className="text-base my-2 font-medium">{i.copete}</p>
-                  <img
-                    className="w-full max-h-60 object-cover my-5"
-                    src={process.env.NEXT_PUBLIC_IMG_URI + "/" + i.img}
-                    alt={i.name}
-                  />
-                  {parse(i.body)}
-                  <div className="absolute h-full py-4 top-0 right-3 flex flex-col gap-2">
-                    <div
-                      onClick={() => {
-                        setModalOpened(true);
-                        setType(1);
-                        setSelected({ ...i });
-                      }}
-                      className="px-3 py-2 bg-blue-500 rounded-xl cursor-pointer shadow-lg"
-                    >
-                      <i className="bx bxs-edit text-2xl text-white"></i>
-                    </div>
-                    <div
-                      onClick={() =>
-                        deleteBlog(setLoader, i._id, setBlogs, () =>
-                          toast.success("Eliminado exitosamente!")
-                        )
-                      }
-                      className="px-3 py-2 bg-red-600 rounded-xl cursor-pointer shadow-lg"
-                    >
-                      <i className="bx bxs-trash text-2xl text-white"></i>
-                    </div>
-                  </div>
-                </div>
-              );
-            }
-          })}
-          {loader && (
-            <div className="w-full h-full py-4 col-span-full flex items-center justify-center">
-              <p>Cargando...</p>
-            </div>
-          )}
-        </div>
-        {modalOpened && (
-          <Modal
-            onClose={() => {
-              setType(0);
-              setSelected(null);
-              setModalOpened(false);
-            }}
-            blogs={blogs}
-            setBlogs={setBlogs}
-            setLoader={setLoader}
-            initialData={selected}
-            type={type}
-          />
-        )}
-      </div>
-    </Dashboard>
-  );
-};
+          <form onSubmit={signin} className="flex flex-col gap-5 ">
+            <div className="flex flex-col gap-1">
+              <label>Email</label>
 
-export default Panel;
+              <input
+                onChange={(e) =>
+                  setFormValues({ ...formValues, email: e.target.value.trim() })
+                }
+                value={formValues.email}
+                type="text"
+                className={`form-control block w-full pl-3 pr-12 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${
+                  authError.email && "border border-red-400"
+                }`}
+                id="exampleFormControlInput1"
+                placeholder="Email"
+              />
+              {authError.email && (
+                <span className=" text-red-500 text-sm">{authError.email}</span>
+              )}
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label>Contraseña</label>
+              <div>
+                <div className="h-full relative">
+                  <input
+                    autoComplete="on"
+                    onChange={(e) =>
+                      setFormValues({
+                        ...formValues,
+                        password: e.target.value.trim(),
+                      })
+                    }
+                    value={formValues.password}
+                    type={hiddenPassword ? "password" : "text"}
+                    className={`form-control block w-full pl-3 pr-12 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none ${
+                      authError.password && "border border-red-400"
+                    }`}
+                    placeholder={hiddenPassword ? "********" : "Contraseña"}
+                  />
+                  <div
+                    className={`absolute text-black top-[50%] translate-y-[-50%] right-2 text-2xl flex items-center h-full px-1  cursor-pointer `}
+                    onClick={() => setHiddenPassword(!hiddenPassword)}
+                  >
+                    {hiddenPassword ? (
+                      <i className="bx bx-show  "></i>
+                    ) : (
+                      <i className="bx bx-hide  "></i>
+                    )}
+                  </div>
+                </div>
+              </div>
+              {authError.password && (
+                <span className=" text-red-600 text-sm">
+                  {authError.password}
+                </span>
+              )}
+            </div>
+            {loader ? (
+              <button
+                type="submit"
+                className="rounded py-2 my-3 text-center font-bold bg-blue-400 w-full cursor-not-allowed"
+              >
+                <PulseLoader size={8} color={"#ffffff"} />
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="rounded py-2 my-3 text-center font-bold bg-blue-500 text-white w-full "
+              >
+                Iniciar Sesion
+              </button>
+            )}
+          </form>
+        </div>
+      </div>
+    </>
+  );
+}

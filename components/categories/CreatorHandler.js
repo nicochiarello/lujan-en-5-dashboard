@@ -28,13 +28,15 @@ const CreatorHandler = ({ onClose, setCategories, setLoader }) => {
         }
       )
       .then((res) => {
-        setCategories(res.data);
         setLoader(false);
-        toast.success("Creado exitosamente");
         onClose();
+        setCategories(res.data);
+        toast.success("Creado exitosamente");
       })
       .catch((err) => {
         toast.error("Error!");
+        onClose()
+        setLoader(false)
       });
   };
 
@@ -43,7 +45,7 @@ const CreatorHandler = ({ onClose, setCategories, setLoader }) => {
       <div
         onClick={handleClose}
         ref={ref}
-        className="absolute w-screen h-screen top-0 left-0 gradient-bg flex items-center justify-center"
+        className="absolute w-screen h-screen top-0 left-0 gradient-bg flex items-center justify-center z-50"
       >
         <div className="rounded-2xl w-full max-w-[600px] h-[300px] bg-white flex flex-col justify-between overflow-hidden">
           <div className="w-full bg-gray-300 py-3 text-black px-4 font-semibold">

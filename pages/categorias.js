@@ -5,6 +5,7 @@ import axios from "axios";
 import CategoryItem from "../components/categories/CategoryItem";
 import { ClipLoader } from "react-spinners";
 import CreatorHandler from "../components/categories/CreatorHandler";
+import { authCookie } from "../utils/getAuthCookie";
 
 const Categorias = () => {
   const [categories, setCategories] = useState([]);
@@ -22,11 +23,17 @@ const Categorias = () => {
       });
   }, []);
 
-  const deleteCategory = (id) => {
+  const deleteCategory = async (id) => {
     setLoader(true);
     axios
       .delete(
-        `${process.env.NEXT_PUBLIC_API_URI}/api/categories/delete/id/${id}`
+        `${process.env.NEXT_PUBLIC_API_URI}/api/categories/delete/id/${id}`,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Token: await authCookie(),
+          },
+        }
       )
       .then(() => {
         setLoader(false);

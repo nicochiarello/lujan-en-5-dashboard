@@ -20,14 +20,14 @@ export default function Home() {
     e.preventDefault();
     setLoader(true);
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URI}/api/users/login`, formValues)
+      .post(`${process.env.NEXT_PUBLIC_API_URI}/api/login`, formValues)
       .then((res) => {
         setLoader(false);
         const cookies = new Cookies();
-        cookies.set(process.env.NEXT_PUBLIC_LUJAN_EN_5_KEY, res.data.token, {
+        cookies.set(process.env.NEXT_PUBLIC_LUJAN_EN_5_KEY, res.data.Token, {
           path: "/",
         });
-        router.push("/dashboard/productos?page=1");
+        router.push("/");
       })
       .catch((err) => {
         setLoader(false);
@@ -73,7 +73,10 @@ export default function Home() {
                   <input
                     autoComplete="on"
                     onChange={(e) =>
-                      setFormValues({ ...formValues, password: e.target.value.trim() })
+                      setFormValues({
+                        ...formValues,
+                        password: e.target.value.trim(),
+                      })
                     }
                     value={formValues.password}
                     type={hiddenPassword ? "password" : "text"}

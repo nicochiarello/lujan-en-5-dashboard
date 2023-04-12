@@ -1,18 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-// import {
-//   createInventoryPrice,
-//   updateInventoryPrice,
-// } from "../../../../utils/api/inventory/prices/routes";
-// import Popup from "../../../popup/Popup";
-// import SearchPopup from "../../../popup/searchPopup/SearchPopup";
+import { authCookie } from "../../utils/getAuthCookie";
 
-const CreatorHandler = ({
-  onClose,
-  setCategories,
-  setLoader,
-}) => {
+const CreatorHandler = ({ onClose, setCategories, setLoader }) => {
   const [category, setCategory] = useState("");
   const ref = useRef();
 
@@ -22,12 +13,20 @@ const CreatorHandler = ({
     }
   };
 
-  const onCreate = () => {
+  const onCreate = async () => {
     setLoader(true);
     axios
-      .post(`${process.env.NEXT_PUBLIC_API_URI}/api/categories/create`, {
-        title: category,
-      })
+      .post(
+        `${process.env.NEXT_PUBLIC_API_URI}/api/categories/create`,
+        {
+          title: category,
+        },
+        {
+          headers: {
+            Token: await authCookie(),
+          },
+        }
+      )
       .then((res) => {
         setCategories(res.data);
         setLoader(false);
@@ -56,9 +55,7 @@ const CreatorHandler = ({
               type="text"
               className="rounded-xl border px-2 py-1 "
               placeholder="Categoría "
-              onChange={(e) =>
-                setCategory(e.target.value)
-              }
+              onChange={(e) => setCategory(e.target.value)}
               value={category}
             />
           </div>

@@ -90,7 +90,7 @@ const Panel = () => {
             <p>Agregar Publicación</p>
           </div>
         </div>
-        <div className="w-full h-full bg-white shadow-2xl mt-5 rounded-2xl grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 md:px-6 py-4 overflow-y-scroll scrollbar">
+        <div className="w-full h-full bg-white shadow-2xl mt-5 rounded-2xl grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-4 md:px-6 py-4 overflow-y-scroll scrollbar-hide">
           {!blogs.length && (
             <div className="flex items-center justify-center w-full h-full col-span-full ">
               <p>No se han encontrado artículos</p>
@@ -102,7 +102,7 @@ const Panel = () => {
                 <div
                   key={i._id}
                   ref={lastBlogChild}
-                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2"
+                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2 scrollbar-hide"
                 >
                   <h3 className="text-xl font-bold my-3">{i.title}</h3>
                   <p className="text-base my-2 font-medium">{i.copete}</p>
@@ -140,7 +140,7 @@ const Panel = () => {
               return (
                 <div
                   key={i._id}
-                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2"
+                  className="relative w-full h-[calc(25rem)] rounded-[calc(35px)] overflow-hidden shadow-2xl overflow-y-scroll px-5 py-2 scrollbar-hide"
                 >
                   <h3 className="text-xl font-bold my-3">{i.title}</h3>
                   <p className="text-base my-2 font-medium">{i.copete}</p>

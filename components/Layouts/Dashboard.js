@@ -10,7 +10,7 @@ const Dashboard = ({ children }) => {
   const [categories, setCategories] = useState(false);
 
   return (
-    <div className="w-screen min-h-screen md:h-screen 2xl:min-h-[calc(50rem)] flex flex-col md:flex-row font-montserrat relative">
+    <div className="w-screen min-h-screen md:h-screen 2xl:min-h-[calc(50rem)] flex flex-col md:flex-row font-montserrat relative scrollbar-hide">
       <Head>
         <title>Lujan En 5 Dashboard</title>
       </Head>

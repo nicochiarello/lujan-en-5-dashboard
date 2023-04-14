@@ -50,7 +50,7 @@ const Dashboard = ({ children }) => {
           </Link>
         </div>
       </div>
-      <div className="w-full md:w-[calc(100vw-200px)] flex-1 ">
+      <div className="w-full md:w-[calc(100vw-200px)] flex-1 overflow-x-hidden">
         <div className="w-full h-full">{children}</div>
       </div>
     </div>

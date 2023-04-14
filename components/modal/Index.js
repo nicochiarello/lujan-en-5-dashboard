@@ -81,7 +81,7 @@ const Index = ({ onClose, loader, setLoader, setBlogs, initialData, type }) => {
     <div
       ref={modalRef}
       onClick={listenerFn}
-      className=" gradient-bg w-screen h-screen flex justify-center items-center fixed top-0 left-0"
+      className=" gradient-bg w-screen py-2 h-screen flex justify-center items-center fixed top-0 left-0"
     >
       <div className="w-full h-full max-h-[650px] mx-2 md:max-w-[calc(900px)] bg-white rounded-xl overflow-hidden flex flex-col justify-between">
         {loader ? (
@@ -94,7 +94,7 @@ const Index = ({ onClose, loader, setLoader, setBlogs, initialData, type }) => {
             <div className="w-full h-[calc(95px)] ">
               <Stepper step={step} />
             </div>
-            <div className="w-full flex-1">
+            <div className="w-full flex-1 overflow-y-scroll py-3 ">
               <Controller
                 step={step}
                 data={data}

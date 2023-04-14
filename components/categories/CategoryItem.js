@@ -3,7 +3,7 @@ import React from "react";
 const CategoryItem = ({ category, onDelete }) => {
   return (
     <div className="w-full py-4 rounded-xl main-boxes-shadow flex justify-between items-center px-2">
-      <p>{category.title}</p>
+      <p className="font-semibold">{category.title}</p>
       <div className="flex gap-3">
         <div
           onClick={() =>

@@ -19,7 +19,7 @@ const Index = ({ onClose, loader, setLoader, setBlogs, initialData, type }) => {
 
   useEffect(() => {
     if (type === 1) {
-      setData({ ...initialData, category: initialData.category._id });
+      setData({ ...initialData, category: initialData.category?._id || null });
     }
   }, [type]);
 
@@ -83,7 +83,7 @@ const Index = ({ onClose, loader, setLoader, setBlogs, initialData, type }) => {
       onClick={listenerFn}
       className=" gradient-bg w-screen h-screen flex justify-center items-center fixed top-0 left-0"
     >
-      <div className="w-full h-full max-h-[700px] mx-2 md:w-[calc(1000px)] md:h-[calc(700px)] bg-white rounded-xl overflow-hidden flex flex-col justify-between">
+      <div className="w-full h-full max-h-[650px] mx-2 md:max-w-[calc(900px)] bg-white rounded-xl overflow-hidden flex flex-col justify-between">
         {loader ? (
           <div className="flex flex-1 justify-center items-center">
             <ClipLoader size={150} />

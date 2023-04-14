@@ -27,7 +27,7 @@ export default function Home() {
         cookies.set(process.env.NEXT_PUBLIC_LUJAN_EN_5_KEY, res.data.Token, {
           path: "/",
         });
-        router.push("/");
+        router.push("/dashboard/blogs");
       })
       .catch((err) => {
         setLoader(false);

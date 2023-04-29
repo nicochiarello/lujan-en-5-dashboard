@@ -23,6 +23,7 @@ const Panel = () => {
         cancelToken: source.token,
       })
       .then((res) => {
+        console.log(res.data)
         setLoader(false);
         setBlogs((prevBlogs) => {
           return [...new Set([...prevBlogs, ...res.data.blogs])];
@@ -63,7 +64,7 @@ const Panel = () => {
         observer.current.observe(node);
       }
     },
-    [loader]
+    [loader,blogs]
   );
 
   return (
